@@ -13,15 +13,18 @@ conn = mysql.connector.connect(
 # 建立游標
 cursor = conn.cursor()
 
+sql  = "CREATE DATABASE IF NOT EXISTS test DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci"
+
 # 建立資料庫
-cursor.execute("CREATE DATABASE IF NOT EXISTS test")
+cursor.execute(sql)
 
-# 確認資料庫是否建立成功
-cursor.execute("SHOW DATABASES")
+# 重新建立連線，連上 test 資料庫
+conn = mysql.connector.connect(
+  host = "localhost",
+  database = "test",
+  user = "root",
+  password = "1234567890"
+)
 
-# 擷取所有結果
-databases = cursor.fetchall()
-
-# 逐一迭代所有資料庫，確認有 test 資料庫
-for db in databases:
-  print(db[0])
+# 建立游標
+cursor = conn.cursor()
