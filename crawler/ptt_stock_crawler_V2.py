@@ -28,6 +28,8 @@ headers = {
 
 root_url = "https://www.ptt.cc/"
 
+platform = "PTT"
+
 
 async def fetch(session, url) :
   async with session.get(url, headers = headers) as response :
@@ -82,10 +84,10 @@ async def parer_response(datas, page) :
       date = date.strftime("%Y-%m-%d") # 轉換為 str 格式 
 
       # 建立 SQL 語法
-      sql = "INSERT INTO stock_news (title, author, link, push_count, created_at) VALUES (%s, %s, %s, %s, %s)"
+      sql = "INSERT INTO stock_news (platform, title, author, link, push_count, created_at) VALUES (%s, %s, %s, %s, %s, %s)"
 
       # 執行 SQL 語法
-      cursor.execute(sql, (title, author, link, push_count, date))
+      cursor.execute(sql, (platform, title, author, link, push_count, date))
 
       # 立即提交
       conn.commit()

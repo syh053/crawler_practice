@@ -25,6 +25,8 @@ url = "https://www.ptt.cc/bbs/Stock/index.html"
 
 root_url = "https://www.ptt.cc/"
 
+platform = "PTT"
+
 headers = {
   "user-agent" : "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36"
 }
@@ -87,10 +89,10 @@ for i in range(10) :
     date = date.strftime("%Y-%m-%d")    
 
     # 建立 SQL 語法
-    sql = "INSERT INTO stock_news (title, author, link, push_count, created_at) VALUES (%s, %s, %s, %s, %s)"
+    sql = "INSERT INTO stock_news (platform, title, author, link, push_count, created_at) VALUES (%s, %s, %s, %s, %s, %s)"
 
     # 執行 SQL 語法
-    cursor.execute(sql, (title, author, link, push_count, date))
+    cursor.execute(sql, (platform, title, author, link, push_count, date))
 
     # 立即提交
     conn.commit()
