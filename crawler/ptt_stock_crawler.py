@@ -1,9 +1,22 @@
 #%%
+import sys
+
+# 設定 project_root
+project_root = r"C:\Users\ANDY\OneDrive\桌面\my_project"
+
+# 加入 project_root 讓 Python 能找到 B 模組
+sys.path.append(project_root)
+
+
 import requests
 from bs4 import BeautifulSoup
 from urllib.parse import urljoin
 import re
+from datetime import datetime
 import time
+
+from mysql_data.create_database_20250331 import conn, cursor
+
 
 # 記錄開始時間
 start_time = time.time()
@@ -54,6 +67,9 @@ for i in range(10) :
     # 取得標題
     title = data.find("a").text
 
+    # 取得作者
+    author = data.find(class_ = "author").text
+    
     # 取得內文連結
     link = data.find("a").get("href")
     link = urljoin(root_url, link)
@@ -61,11 +77,32 @@ for i in range(10) :
     # 取得推文數
     push_count = int(data.find("span", class_ = ["hl f2", "hl f3"]).text)
 
+    # 取得時間
+    date = data.find(class_ = "date").text.strip()
+
+    # 轉換成 datetime 物件
+    date = datetime.strptime(date, "%m/%d").replace(year=2025)
+
+    # 轉換為 str 格式 
+    date = date.strftime("%Y-%m-%d")    
+
+    # 建立 SQL 語法
+    sql = "INSERT INTO stock_news (title, author, link, push_count, created_at) VALUES (%s, %s, %s, %s, %s)"
+
+    # 執行 SQL 語法
+    cursor.execute(sql, (title, author, link, push_count, date))
+
+    # 立即提交
+    conn.commit()
+
 
     print(title)
+    print(author)
+    print(date)
     print(link)
     print(push_count)
     print("-" * 50)
+
 
 # 記錄結束時間
 end_time = time.time()
