@@ -116,32 +116,38 @@ for data in datas :
     content += word.text
 
 
+  # 查詢 SQL 語法
   sql = """
-  INSERT INTO stock_news (platform, title, author, link, img, content, created_at) VALUES (%s, %s, %s, %s, %s, %s, %s)
+    SELECT platform, title, author, link, push_count, created_at FROM stock_news
+    WHERE platform = %s AND title = %s
   """
 
-  cursor.execute(sql, (platform, title, author, link, img, content, date))
-    
-  # 立即提交
-  conn.commit()  
+  # 執行 SQL 語法
+  cursor.execute(sql, (platform, title))
 
-  print(title)
-  print(author)
-  print(link)
-  print(img)
-  print(date)
-  print(content)
-  print()
+  result = cursor.fetchall()
+
+  if not result :
+    sql = """
+    INSERT INTO stock_news (platform, title, author, link, img, content, created_at) VALUES (%s, %s, %s, %s, %s, %s, %s)
+    """
+
+    cursor.execute(sql, (platform, title, author, link, img, content, date))
+      
+    # 立即提交
+    conn.commit()  
+
+    print(title)
+    print(author)
+    print(link)
+    print(img)
+    print(date)
+    print(content)
+    print()
+
+  else :
+    print(f"文章 {title} 已存在!!!")
 
 
 # 關閉 driver
 driver.close()
-
-
-#%%
-word = "                聯合新聞網／                "
-
-result = word.strip().split('／')[0]
-
-print(result)
-

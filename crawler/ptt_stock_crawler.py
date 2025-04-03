@@ -86,24 +86,39 @@ for i in range(10) :
     date = datetime.strptime(date, "%m/%d").replace(year=2025)
 
     # 轉換為 str 格式 
-    date = date.strftime("%Y-%m-%d")    
+    date = date.strftime("%Y-%m-%d")   
 
-    # 建立 SQL 語法
-    sql = "INSERT INTO stock_news (platform, title, author, link, push_count, created_at) VALUES (%s, %s, %s, %s, %s, %s)"
+
+    # 查詢 SQL 語法
+    sql = """
+      SELECT platform, title, author, link, push_count, created_at FROM stock_news
+      WHERE platform = %s AND title = %s
+    """
 
     # 執行 SQL 語法
-    cursor.execute(sql, (platform, title, author, link, push_count, date))
+    cursor.execute(sql, (platform, title))
 
-    # 立即提交
-    conn.commit()
+    result = cursor.fetchall()
 
+    if not result :
+      # 建立 SQL 語法
+      sql = "INSERT INTO stock_news (platform, title, author, link, push_count, created_at) VALUES (%s, %s, %s, %s, %s, %s)"
 
-    print(title)
-    print(author)
-    print(date)
-    print(link)
-    print(push_count)
-    print("-" * 50)
+      # 執行 SQL 語法
+      cursor.execute(sql, (platform, title, author, link, push_count, date))
+
+      # 立即提交
+      conn.commit()
+
+      print(title)
+      print(author)
+      print(date)
+      print(link)
+      print(push_count)
+      print("-" * 50)      
+
+    else :
+      print(f"文章 {title} 已存在!!!")
 
 
 # 記錄結束時間
