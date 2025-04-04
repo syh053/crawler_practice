@@ -1,10 +1,67 @@
 {% extends "public/base.html" %}
 
+{% block css %}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/news.css') }}">
+{% endblock %}
+
 
 {% block index_title %} <title>股票新聞</title> {% endblock %}
 
 {% block content %}
 
-  <!-- Your news content goes here -->
+  <div class="main">
+
+    <div class="main-content">
+      <div class="news-content">
+
+        {% for row in datas %}
+
+          {% if row[1] == "PTT" %}
+      
+            <div class="news-left">
+                <img src="{{ url_for('static', filename = 'img/ptt.jpg') }}">
+            </div>
+          
+            <div class="news-right">
+              <a href="{{ row[4] }}" target="_blank">
+                <p>{{ row[2] }}</p>
+              </a>
+              <div class="platform"> 平台 : {{ row[1] }} </div>
+              <br>
+              <div class="platform"> 作者 : {{ row[3] }} </div>
+              <br>
+              <div class="platform"> 推文數 : {{ row[6] }} </div>
+              <br>
+              <span>{{ row[8] }}</span>
+            </div>
+
+          {% elif row[1] == "UDN" %}
+
+            <div class="news-left">
+              <img src="{{ row[5] }}">
+            </div>
+            
+            <div class="news-right">
+              <a href="{{ row[4] }}" target="_blank">
+                <p>{{ row[2] }}</p>
+              </a>
+              <div class="platform"> 平台 : {{ row[1] }} </div>
+              <br>
+              <div class="platform"> 作者 : {{ row[3] }} </div>
+              <br>
+              <div class="platform"> 內文 : {{ row[7] | truncate(50, True, '...') }} </div>
+              <br>
+              <span>{{ row[8] }}</span>
+            </div>
+
+          {% endif %}
+
+        {% endfor %}
+      
+      </div>
+
+    </div>
+
+  </div>
 
 {% endblock %}
