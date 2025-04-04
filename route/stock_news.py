@@ -214,4 +214,4 @@ def get_stock_news() :
     per_page = limit # 每頁顯示 15 筆
   )
 
-  return render_template("stock.html", datas = datas, params = search_params, pagination = pagination)
+  return render_template("news.html", datas = datas, params = search_params, pagination = pagination)
