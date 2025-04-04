@@ -7,59 +7,74 @@
 
 {% block index_title %} <title>股票新聞</title> {% endblock %}
 
+
+
 {% block content %}
+  {% include "public/news_search_bar.html" %}
 
   <div class="main">
 
     <div class="main-content">
       <div class="news-content">
 
-        {% for row in datas %}
+        {% if datas %}
 
-          {% if row[1] == "PTT" %}
-      
-            <div class="news-left">
-                <img src="{{ url_for('static', filename = 'img/ptt.jpg') }}">
-            </div>
-          
-            <div class="news-right">
-              <a href="{{ row[4] }}" target="_blank">
-                <p>{{ row[2] }}</p>
-              </a>
-              <div class="platform"> 平台 : {{ row[1] }} </div>
-              <br>
-              <div class="platform"> 作者 : {{ row[3] }} </div>
-              <br>
-              <div class="platform"> 推文數 : {{ row[6] }} </div>
-              <br>
-              <span>{{ row[8] }}</span>
-            </div>
+          {% for row in datas %}
 
-          {% elif row[1] == "UDN" %}
-
-            <div class="news-left">
-              <img src="{{ row[5] }}">
-            </div>
+            {% if row[1] == "PTT" %}
+        
+              <div class="news-left">
+                  <img src="{{ url_for('static', filename = 'img/ptt.jpg') }}">
+              </div>
             
-            <div class="news-right">
-              <a href="{{ row[4] }}" target="_blank">
-                <p>{{ row[2] }}</p>
-              </a>
-              <div class="platform"> 平台 : {{ row[1] }} </div>
-              <br>
-              <div class="platform"> 作者 : {{ row[3] }} </div>
-              <br>
-              <div class="platform"> 內文 : {{ row[7] | truncate(50, True, '...') }} </div>
-              <br>
-              <span>{{ row[8] }}</span>
-            </div>
+              <div class="news-right">
+                <a href="{{ row[4] }}" target="_blank">
+                  <p>{{ row[2] }}</p>
+                </a>
+                <div class="platform"> 平台 : {{ row[1] }} </div>
+                <br>
+                <div class="platform"> 作者 : {{ row[3] }} </div>
+                <br>
+                <div class="platform"> 推文數 : {{ row[6] }} </div>
+                <br>
+                <span>{{ row[8] }}</span>
+              </div>
 
-          {% endif %}
+            {% elif row[1] == "UDN" %}
 
-        {% endfor %}
+              <div class="news-left">
+                <img src="{{ row[5] }}">
+              </div>
+              
+              <div class="news-right">
+                <a href="{{ row[4] }}" target="_blank">
+                  <p>{{ row[2] }}</p>
+                </a>
+                <div class="platform"> 平台 : {{ row[1] }} </div>
+                <br>
+                <div class="platform"> 作者 : {{ row[3] }} </div>
+                <br>
+                <div class="platform"> 內文 : {{ row[7] | truncate(50, True, '...') }} </div>
+                <br>
+                <span>{{ row[8] }}</span>
+              </div>
+
+            {% endif %}
+
+          {% endfor %}
+
+        {% else %}
+        
+         <h2 class="no-data" style="margin-top: 1.5em; color: #ff0000;">查無資料唷~~</h2>
+        
+        {% endif %}
       
       </div>
 
+    </div>
+
+    <div class="pagination">
+      {{ pagination.links }}
     </div>
 
   </div>

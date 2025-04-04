@@ -1,8 +1,6 @@
 from flask import Flask
 from route.index import routes
 
-
-
 # 創建 Flask 實例
 app = Flask(__name__)
 

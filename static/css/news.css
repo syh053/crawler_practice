@@ -28,3 +28,23 @@
 h2 {
   margin-top: 2em;
 }
+
+form {
+  width: 85%;
+  margin: 0 auto;
+}
+
+.search {
+ display: grid;
+ grid-template-columns: 30% 30% 30%; /* 設定三欄，每一欄寬度 100px */
+}
+
+a {
+  text-decoration: none;
+}
+
+.pagination {
+  width: 40%;
+  margin: 0 auto;
+  margin-bottom: 1em;
+}
