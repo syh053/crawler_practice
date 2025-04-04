@@ -1,0 +1,12 @@
+{% block js %}
+  <script>
+    setTimeout(function () {
+      window.history.back();  // 返回到上一頁
+    }, 3000); // 3 秒後自動跳轉
+  </script>
+{% endblock %}
+
+{% block content %}
+  <h1>404 - 找不到頁面</h1>
+  <p>3 秒後將自動返回上一頁...</p>
+{% endblock %}
