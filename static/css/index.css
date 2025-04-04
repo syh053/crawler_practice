@@ -1,0 +1,46 @@
+html, body {
+  height: 100%;
+  margin: 0;
+  background-color: #F0F0F0;
+}
+
+#wrapper {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+#banner {
+  height: 60px;
+}
+
+#menu {
+  background-color: #4F4F4F;
+}
+
+#content {
+  min-height: 50vh;
+  flex-grow: 1;
+}
+
+#footer {
+  height: 50px;
+  background-color: #4F4F4F;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.navbar a {
+  color: #FCFCFC;
+}
+
+.navbar {
+  display: flex;
+  justify-content: center;
+}
+
+.footer-content h3{
+  margin: 0;
+}
+
