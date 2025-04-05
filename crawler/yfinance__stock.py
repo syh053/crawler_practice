@@ -14,7 +14,7 @@ from datetime import datetime, timedelta
 from mysql_data.create_database_20250331 import conn, cursor
 
 today = datetime.today()
-older_day = datetime.today() - timedelta(days=55)
+older_day = datetime.today() - timedelta(days=100)
 
 today_str = datetime.strftime(today , "%Y-%m-%d")
 older_day_str = datetime.strftime(older_day , "%Y-%m-%d")
@@ -24,8 +24,8 @@ print(older_day_str)
 
 stock_name = "TWSE"
 
-# 取 30 筆資料
-data = yf.Ticker("^TWII").history(start = older_day_str, end = today_str)[-30 :]
+# 取得資料
+data = yf.Ticker("^TWII").history(start = older_day_str, end = today_str)
 
 # 取需要的欄位
 data = data[["Open", "High", "Low", "Close", "Volume"]]
@@ -52,6 +52,9 @@ data["SMA20"] = data["Close"].rolling(window=20).mean().round(2)
 data["SMA5"] = data["SMA5"].fillna(0)
 data["SMA10"] = data["SMA10"].fillna(0)
 data["SMA20"] = data["SMA20"].fillna(0)
+
+# 取 30 筆資料
+data = data[-30 :]
 
 
 for index, value in data.iterrows():
