@@ -37,6 +37,10 @@ def index():
   # 將取得的資料放進 datas 變數
   datas = cursor.fetchall()
 
+
+  print(datas) 
+  
+
   # 將資料轉換成字典後傳出去給 html 使用
   stock_datas = {
     "date" : [],

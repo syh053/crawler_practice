@@ -13,7 +13,7 @@ import pandas as pd
 from datetime import datetime, timedelta
 from mysql_data.create_database_20250331 import conn, cursor
 
-today = datetime.today()
+today = datetime.today() + timedelta(days = 1)
 older_day = datetime.today() - timedelta(days=100)
 
 today_str = datetime.strftime(today , "%Y-%m-%d")

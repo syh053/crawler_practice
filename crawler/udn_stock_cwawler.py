@@ -1,11 +1,11 @@
 #%%
+from pathlib import Path
 import sys
 
 # 設定 project_root
-project_root = r"C:\Users\ANDY\OneDrive\桌面\my_project"
+project_root = Path(__file__).resolve().parent.parent
 
-# 加入 project_root 讓 Python 能找到 B 模組
-sys.path.append(project_root)
+sys.path.append(str(project_root))
 
 
 from selenium import webdriver

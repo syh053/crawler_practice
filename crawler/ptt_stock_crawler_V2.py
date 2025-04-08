@@ -1,8 +1,10 @@
 #%%
 import sys
+from pathlib import Path
+
 
 # 設定 project_root
-project_root = r"C:\Users\ANDY\OneDrive\桌面\my_project"
+project_root = str(Path(__file__).resolve().parent.parent / 'mysql_data')
 
 # 加入 project_root 讓 Python 能找到 B 模組
 sys.path.append(project_root)
@@ -18,7 +20,7 @@ from datetime import datetime
 import time
 
 
-from mysql_data.create_database_20250331 import conn, cursor
+from create_database_20250331 import conn, cursor
 
 nest_asyncio.apply()
 
@@ -29,6 +31,9 @@ headers = {
 root_url = "https://www.ptt.cc/"
 
 platform = "PTT"
+
+# 最多同時發送 5 個請求
+semaphore = asyncio.Semaphore(5)
 
 
 async def fetch(session, url) :
