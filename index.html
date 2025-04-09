@@ -34,7 +34,7 @@
 
 <div class="charts">
   {% for row in all_datas %}
-    <div id="container-{{ loop.index0 }}" class="border" style="height: 500px; width: 80%; margin: 4em auto;"></div>
+  <div id="container-{{ loop.index0 }}" class="border" style="height: 500px; width: 80%; margin: 4em auto;"></div>
   {% endfor %}
 </div>
 
@@ -71,32 +71,32 @@
     xAxis: {
       type: 'category',
       data: {{ datas["date"] | tojson }},
-      boundaryGap: false,
-      axisLine: { onZero: false },
-      splitLine: { show: false },
-      min: 'dataMin',
-      max: 'dataMax'
+  boundaryGap: false,
+    axisLine: { onZero: false },
+  splitLine: { show: false },
+  min: 'dataMin',
+    max: 'dataMax'
     },
-    yAxis: {
-      scale: true,
+  yAxis: {
+    scale: true,
       splitArea: {
       show: true
     }
+  },
+  dataZoom: [
+    {
+      type: 'inside',
+      start: 50,
+      end: 100
     },
-    dataZoom: [
-      {
-        type: 'inside',
-        start: 0,
-        end: 100
-      },
-      {
-        show: true,
-        type: 'slider',
-        top: '90%',
-        start: 50,
-        end: 100
-      }
-    ],
+    {
+      show: true,
+      type: 'slider',
+      top: '90%',
+      start: 50,
+      end: 100
+    }
+  ],
     series: [
       {
         name: '日K',
@@ -218,49 +218,14 @@
 
   const stockDatas = {{ all_datas | tojson }}
 
-    console.log(stockDatas)
+  console.log(stockDatas)
 
-    stockDatas.forEach((element, index) => {
-      const chartDom = document.getElementById(`container-${index}`);
+  stockDatas.forEach((element, index) => {
+    const chartDom = document.getElementById(`container-${index}`);
 
-      console.log(element)
+    console.log(chartDom)
 
-      var myChart = echarts.init(chartDom);
-      var option;
-
-      option = {
-        title: {
-        text: element.name,
-        left: 0
-        },
-        grid: {
-          left: '20%',   // 增加左邊的空間
-          right: '20%',  // 增加右邊的空間
-          bottom: '15%', // 增加底部的空間
-          top: '20%',    // 增加頂部的空間
-        },
-        xAxis: {
-          type: 'category',
-          data: element.date,
-          boundaryGap: false, // 確保 X 軸能顯示第一個和最後一個資料點
-        },
-        yAxis: {
-          type: 'value',
-          data : element.close,
-          min: 'dataMin',
-          max: 'dataMax'
-        },
-        series: [
-          {
-            data: element.close,
-            type: 'line'
-          }
-        ]
-      };
-
-      option && myChart.setOption(option);
-
-      });
+  });
 
 </script>
 

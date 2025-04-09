@@ -25,6 +25,54 @@ routes.register_blueprint(analysis, url_prefix = "/stock")
 
 @routes.route("/index", methods = ["GET"])
 def index():
+  """ 搜尋 SQL 語句，取得所有類股名字 """
+  sql = "SELECT DISTINCT name from analysis_datas"
+
+  cursor.execute(sql)
+
+  names = cursor.fetchall()
+
+  names = [row[0] for row in names ]
+
+  # print(names)
+
+  all_datas = []
+
+  for name in names :
+       
+    sql = "SELECT * FROM analysis_datas WHERE name = %s"
+
+    params = (name,)
+
+    cursor.execute(sql, params)
+
+    sector = cursor.fetchall()
+
+    data_dic = {
+      "name": name,
+      "date" : [],
+      "close" : [],
+      "volume" : [],
+      "sma5" : [],
+      "sma10" : [],
+      "sma20" : []
+    }
+    
+    # 逐一迭代資料放進字典中
+    for data in sector :
+      # values = [data[3], data[6], data[5], data[4]] # 順序 open close low high
+      data_dic["date"].append(datetime.strftime(data[2], '%Y/%m/%d'))
+      data_dic["close"].append(data[6])
+      data_dic["volume"].append(data[7])
+      data_dic["sma5"].append(data[8])
+      data_dic["sma10"].append(data[9])
+      data_dic["sma20"].append(data[10])
+
+    all_datas.append(data_dic)
+
+  print(len(all_datas))
+
+
   """顯示大盤指數技術圖"""
   # 搜尋 SQL 語句
   sql = """
@@ -38,7 +86,7 @@ def index():
   datas = cursor.fetchall()
 
 
-  print(datas) 
+  # print(datas) 
   
 
   # 將資料轉換成字典後傳出去給 html 使用
@@ -61,10 +109,10 @@ def index():
     stock_datas["sma10"].append(data[9])
     stock_datas["sma20"].append(data[10])
 
-  print(stock_datas["date"])
+  # print(stock_datas["date"])
 
 
-  return render_template("index.html", datas = stock_datas)
+  return render_template("index.html", datas = stock_datas, all_datas = all_datas[1:])
 
 
 # 404 錯誤處理：導回首頁

@@ -45,3 +45,9 @@ html, body {
   color: #FCFCFC;
 }
 
+.charts {
+  width: 90%;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 25% 25% 25% 25%; /* 設定四欄，每一欄寬度占比 25% */
+}
