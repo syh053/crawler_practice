@@ -1,0 +1,11 @@
+{% extends "public/base.html" %}
+
+
+{% block content %}
+
+  <h1 class="text-center mb-4">新聞熱度</h1>
+  <div class="text-center">
+    <img style="margin: 0 auto;" src="{{ url_for('routes.word_cloud.wordcloud') }}" alt="">
+  </div>
+
+{% endblock %}

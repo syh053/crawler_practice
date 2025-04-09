@@ -10,6 +10,7 @@ from flask import Blueprint, render_template
 from datetime import datetime
 from .stock_news import stock_news 
 from .stock_analysis import analysis
+from .word_cloud import wc
 
 
 from mysql_data.create_database_20250331 import conn, cursor
@@ -21,6 +22,8 @@ routes = Blueprint("routes", __name__)
 routes.register_blueprint(stock_news, url_prefix = "/stock")
 
 routes.register_blueprint(analysis, url_prefix = "/stock")
+
+routes.register_blueprint(wc, url_prefix = "/cloud")
 
 
 @routes.route("/index", methods = ["GET"])
